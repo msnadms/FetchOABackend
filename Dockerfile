@@ -3,6 +3,8 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
+ENV ASPNETCORE_ENVIRONMENT=Development
+
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["FetchOA/FetchOA.csproj", "FetchOA/"]
@@ -17,4 +19,4 @@ RUN dotnet publish "FetchOA.csproj" -c Release -o /app/publish /p:UseAppHost=fal
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "FetchOA.dll"]
+ENTRYPOINT ["dotnet", "FetchOA.dll", "--environment=Development"]
