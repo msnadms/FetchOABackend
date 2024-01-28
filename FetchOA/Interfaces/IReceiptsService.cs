@@ -5,7 +5,7 @@ namespace FetchOA.Interfaces
 {
     public interface IReceiptsService
     {
-        Guid ProcessReceipts(ReceiptDto receiptDto);
+        Guid ProcessReceipts(Receipt receipt);
 
         int GetPoints(Guid receiptId);
     }

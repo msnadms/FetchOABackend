@@ -1,4 +1,5 @@
-﻿using FetchOA.Dtos;
+﻿using AutoMapper;
+using FetchOA.Dtos;
 using FetchOA.Interfaces;
 using FetchOA.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,23 +12,42 @@ namespace FetchOA
     public class ReceiptsController : ControllerBase, IReceiptsController
     {
 
-        private IReceiptsService receiptsService;
+        private IReceiptsService ReceiptsService { get; set; }
+        private IMapper Mapper { get; set; }
 
-        public ReceiptsController(IReceiptsService receiptsService) 
+        public ReceiptsController(IMapper mapper, IReceiptsService receiptsService) 
         {
-            this.receiptsService = receiptsService;
+            this.Mapper = mapper;
+            this.ReceiptsService = receiptsService;
         }
 
         [Route("process")]
         [HttpPost]
         public ActionResult<IdDto> ProcessReceipts([FromBody] ReceiptDto receiptDto)
         {
-            var receiptId = receiptsService.ProcessReceipts(receiptDto);
-            var idDto = new IdDto
+            if (!ModelState.IsValid 
+                || receiptDto.PurchaseDate == null 
+                || receiptDto.PurchaseTime == null 
+                || receiptDto.Retailer == null 
+                || receiptDto.Items == null
+                || !receiptDto.Total.HasValue)
             {
-                Id = receiptId,
-            };
-            return Ok(idDto);
+                return BadRequest("The receipt is invalid");
+            }
+            try
+            {
+                var receipt = Mapper.Map<Receipt>(receiptDto);
+                receipt.Id = Guid.NewGuid();
+                var receiptId = ReceiptsService.ProcessReceipts(receipt);
+                var idDto = new IdDto
+                {
+                    Id = receiptId,
+                };
+                return Ok(idDto);
+            } catch (AutoMapperMappingException)
+            {
+                return BadRequest("The receipt is invalid");
+            }
 
         }
 
@@ -35,7 +55,7 @@ namespace FetchOA
         [HttpGet]
         public ActionResult<PointsDto> GetPoints([FromRoute] Guid id)
         {
-            int points = receiptsService.GetPoints(id);
+            int points = ReceiptsService.GetPoints(id);
             if (points == -1)
             {
                 return NotFound("No receipt found for that id");
@@ -44,7 +64,7 @@ namespace FetchOA
             {
                 points = points,
             };
-            return pointsDto;
+            return Ok(pointsDto);
         }
 
 

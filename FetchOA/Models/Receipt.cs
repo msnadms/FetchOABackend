@@ -6,8 +6,8 @@ namespace FetchOA.Models
     {
         public Guid Id { get; set; }
         public string? Retailer { get; set; }
-        public string? PurchaseDate { get; set; }
-        public string? PurchaseTime { get; set; }
+        public DateOnly PurchaseDate { get; set; }
+        public TimeOnly PurchaseTime { get; set; }
         public float Total { get; set; }
         public List<Item>? Items { get; set; }
 

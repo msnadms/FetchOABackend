@@ -9,9 +9,10 @@ namespace FetchOA.Mapper
         public MappingProfile()
         {
             CreateMap<ReceiptDto, Receipt>()
-                .ForMember(dest => dest.Id, opts => opts.Ignore());
+                .ForMember(dest => dest.Id, opts => opts.Ignore())
+                .ForMember(dest => dest.PurchaseDate, opts => opts.MapFrom(src => DateOnly.Parse(src.PurchaseDate!)))
+                .ForMember(dest => dest.PurchaseTime, opts => opts.MapFrom(src => TimeOnly.Parse(src.PurchaseTime!)));
 
-            CreateMap<Receipt, ReceiptDto>();
         }
 
 
