@@ -2,7 +2,7 @@
 {
     public class Item
     {
-        public string ShortDescription { get; set; }
+        public string? ShortDescription { get; set; }
         public float Price { get; set; }
 
     }

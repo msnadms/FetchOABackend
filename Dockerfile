@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["FetchOA/FetchOA.csproj", "FetchOA/"]
 RUN dotnet restore "FetchOA/FetchOA.csproj"
-COPY . .
+COPY ["FetchOA/", "FetchOA/"]
 WORKDIR "/src/FetchOA"
 RUN dotnet build "FetchOA.csproj" -c Release -o /app/build
 
