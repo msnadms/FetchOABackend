@@ -7,8 +7,8 @@ namespace FetchOA.Dtos
         public string? Retailer { get; set; }
         public string? PurchaseDate { get; set; }
         public string? PurchaseTime { get; set; }
-        public float? Total { get; set; }
-        public List<Item>? Items { get; set; }
+        public List<ItemDto>? Items { get; set; }
+        public string? Total { get; set; }
 
     }
 }

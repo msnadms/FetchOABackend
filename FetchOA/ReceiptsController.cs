@@ -29,8 +29,8 @@ namespace FetchOA
                 || receiptDto.PurchaseDate == null 
                 || receiptDto.PurchaseTime == null 
                 || receiptDto.Retailer == null 
-                || receiptDto.Items == null
-                || !receiptDto.Total.HasValue)
+                || receiptDto.Items == null || !receiptDto.Items.Any()
+                || receiptDto.Total == null)
             {
                 return BadRequest("The receipt is invalid");
             }

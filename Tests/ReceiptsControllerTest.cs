@@ -35,8 +35,8 @@ namespace Tests
                 Retailer = "test",
                 PurchaseDate = "2024-1-28",
                 PurchaseTime = "12:00",
-                Items = new List<Item>(),
-                Total = 1F,
+                Items = new List<ItemDto>() { new ItemDto { ShortDescription = "test", Price = "1" } },
+                Total = "1",
             };
         
             var result = receiptsController.ProcessReceipts(receiptDto);
@@ -51,8 +51,8 @@ namespace Tests
             {
                 Retailer = "test",
                 PurchaseDate = "2024-1-28",
-                Items = new List<Item>(),
-                Total = 1F,
+                Items = new List<ItemDto>() { new ItemDto { ShortDescription = "test", Price = "1" } },
+                Total = "1",
             }; 
             //No PurchaseTime
 
@@ -70,8 +70,8 @@ namespace Tests
                 Retailer = "test",
                 PurchaseDate = "test",
                 PurchaseTime = "12:00",
-                Items = new List<Item>(),
-                Total = 1F,
+                Items = new List<ItemDto>() { new ItemDto { ShortDescription = "test", Price = "1" } },
+                Total = "1",
             };
 
             var result = receiptsController.ProcessReceipts(receiptDto);
